@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>InspiredJewelry</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background-color: #000;
+      color: gold;
+    }
+    header {
+      background-color: #111;
+      padding: 1rem;
+      text-align: center;
+      font-size: 2rem;
+    }
+    nav {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      padding: 1rem;
+      background-color: #222;
+    }
+    nav a {
+      color: gold;
+      text-decoration: none;
+    }
+    .product {
+      border: 1px solid gold;
+      margin: 1rem;
+      padding: 1rem;
+      border-radius: 10px;
+    }
+    .admin-panel {
+      display: none;
+      margin: 2rem;
+      padding: 1rem;
+      border: 1px solid gold;
+    }
+    #chart {
+      background: #111;
+      margin-top: 1rem;
+    }
+    footer {
+      text-align: center;
+      padding: 2rem;
+      background-color: #111;
+    }
+  </style>
+</head>
+<body>
+  <header>InspiredJewelry</header>
+  <nav>
+    <a href="#shop">Shop</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <section id="shop">
+    <h2 style="text-align:center">Shop</h2>
+    <div class="product">
+      <h3>Inspired Love Bangle</h3>
+      <img src="your-image-link-1.jpg" alt="Love Bangle" width="200" />
+      <p>$24.99</p>
+      <div id="paypal-button-container-love"></div>
+    </div>
+    <div class="product">
+      <h3>Inspired Clover Bracelet</h3>
+      <img src="your-image-link-2.jpg" alt="Clover Bracelet" width="200" />
+      <p>$29.99</p>
+      <div id="paypal-button-container-clover"></div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2 style="text-align:center">Contact</h2>
+    <form action="mailto:inspiredjewelshelp@outlook.com" method="POST">
+      <p style="text-align:center">
+        <label>Email:</label><br />
+        <input type="email" name="email" required />
+      </p>
+      <p style="text-align:center">
+        <label>Message:</label><br />
+        <textarea name="message" rows="5" required></textarea>
+      </p>
+      <p style="text-align:center">
+        <button type="submit">Send</button>
+      </p>
+    </form>
+    <p style="text-align:center">
+      <input type="password" id="adminPass" placeholder="Admin password" />
+      <button onclick="checkPassword()">Enter Admin Panel</button>
+    </p>
+  </section>
+
+  <section id="adminPanel" class="admin-panel">
+    <h2>Admin Panel</h2>
+    <p>Add new product details here (placeholder only — real product adding will need backend):</p>
+    <input placeholder="Product Name" /><br /><br />
+    <input placeholder="Image URL" /><br /><br />
+    <input placeholder="Price" /><br /><br />
+    <button>Add Product</button>
+    <div id="chart">
+      <h3>Sales Chart (Mock Data)</h3>
+      <img src="https://quickchart.io/chart?c={type:'bar',data:{labels:['Week 1','Week 2','Week 3'],datasets:[{label:'Sales ($)',data:[100,250,400]}]}}" />
+    </div>
+  </section>
+
+  <footer>
+    &copy; 2025 InspiredJewelry
+  </footer>
+
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=USD"></script>
+  <script>
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{ amount: { value: '24.99' } }]
+        });
+      },
+      onApprove: function(data, actions) {
+        alert('Order placed! A confirmation will be sent to muhammdk826@gmail.com');
+        return actions.order.capture();
+      }
+    }).render('#paypal-button-container-love');
+
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{ amount: { value: '29.99' } }]
+        });
+      },
+      onApprove: function(data, actions) {
+        alert('Order placed! A confirmation will be sent to muhammdk826@gmail.com');
+        return actions.order.capture();
+      }
+    }).render('#paypal-button-container-clover');
+
+    function checkPassword() {
+      const input = document.getElementById('adminPass').value;
+      if (input === 'Khan7890!') {
+        document.getElementById('adminPanel').style.display = 'block';
+        alert('Welcome to the Admin Panel.');
+      } else {
+        alert('Incorrect Password');
+      }
+    }
+  </script>
+</body>
+</html>
